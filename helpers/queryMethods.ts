@@ -28,4 +28,5 @@ export async function getAllCollections() {
 export async function getProductById(id: string) {
 	const { query, variables } = getProductByIdQuery(id);
 	const response = await shopifyFetch({ query, variables });
+	return response;
 }

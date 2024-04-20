@@ -31,7 +31,7 @@ export async function shopifyFetch({
 
 		console.log({
 			status: (await result).status,
-			body: responseBody?.data?.data,
+			body: responseBody,
 		});
 
 		return {

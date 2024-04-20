@@ -31,24 +31,24 @@ export const getAllProductsQuery = (): Query => {
 export const getProductByIdQuery = (id: string): Query => {
 	return {
 		query: `{
-        product(id:${id}) {
-          edges{
-            node {
-              id
-              title
-              handle
-              productType
-              description
-              featuredImage{
-                height
-                width 
-                url
-              }
-              
-            }
+      node(id:"${id}") {
+      ... on Product{
+          id
+          title
+          productType
+          featuredImage{
+              url
           }
-        }
-      }`,
+          description
+          images(first:10){
+              nodes{
+                  url
+              }
+          } 
+          
+      }
+
+      }}`,
 		variables: `{}`,
 	};
 };
@@ -60,6 +60,7 @@ export const getProductsByProductTypeQuery = (productType: string): Query => {
       products(first:10,query:"(product_type:${productType})"){
         edges{
           node{
+            id
             title
             description
             images(first:5) {

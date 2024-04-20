@@ -36,6 +36,11 @@ const config = {
 					foreground: "rgb(51,51,51)",
 				},
 				foreground: "hsl(var(--foreground))",
+				white: {
+					DEFAULT: "rgb(255,255,255)",
+					100: "rgb(255,255,255)",
+					200: "rgb(207,199,188)",
+				},
 				primary: {
 					DEFAULT: "rgb(254,122,160)",
 					foreground: "rgb(254,122,160)",

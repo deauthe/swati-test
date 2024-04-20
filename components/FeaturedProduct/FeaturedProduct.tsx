@@ -6,9 +6,9 @@ type Props = {};
 
 const FeaturedProduct = (props: Props) => {
 	return (
-		<div className="h-fit w-full flex bg-secondary px-44">
+		<div className="h-fit w-full flex bg-secondary pb-10 px-44">
 			<div className="grid grid-cols-2 gap-10 my-auto mx-auto ">
-				<div className="flex flex-col gap-3 text-white">
+				<div className="flex flex-col gap-3 text-white my-auto">
 					<div className="text-3xl uppercase text-primary font-semibold tracking-widest">
 						get vip access
 					</div>
@@ -43,8 +43,8 @@ const FeaturedProduct = (props: Props) => {
 						</div>
 					</div>
 				</div>
-				<div className="overflow-hidden">
-					<ProductCard id="" />
+				<div className="overflow-hidden my-auto">
+					<ProductCard id="gid://shopify/Product/6968231329924" />
 				</div>
 			</div>
 		</div>

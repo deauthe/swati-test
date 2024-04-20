@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductSideviewSheet } from "./ProductSideViewSheet";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
 import { useProductByid } from "@/hooks/useProductById";
+import { Button } from "../ui/button";
 
 type Props = { id: string };
 
@@ -13,16 +14,21 @@ const ProductCard = (props: Props) => {
 		description,
 		featuredImage,
 		images,
-		price,
+		priceRange,
 		title,
 		variants,
 		loading,
+		productType,
 	} = useProductByid(props.id);
+	const [image, setImage] = useState();
 
-	const [image, setImage] = useState(featuredImage);
+	useEffect(() => {
+		setImage(featuredImage);
+		console.log("feautured image :", featuredImage);
+	}, [featuredImage]);
 
 	const handleHover = () => {
-		setImage(images[2]);
+		setImage(featuredImage);
 	};
 
 	const handleMouseLeave = () => {
@@ -34,28 +40,57 @@ const ProductCard = (props: Props) => {
 	}
 
 	return (
-		<div className=" group flex flex-col gap-1 overflow-hidden my-auto ">
+		<div className=" group flex flex-col gap-1 overflow-hidden my-auto mx-auto w-96  bg-gradient-to-b from-white-100/[0.6] to-white-100  p-5 shadow-lg">
+			<div className="relative top-0 right-0 ml-auto ">
+				{featuredImage && (
+					<ProductSideviewSheet
+						featuredImage={featuredImage}
+						description={description}
+						productType={productType || ""}
+						title={title || ""}
+					/>
+				)}
+			</div>
 			<Link href="">
-				<div onMouseEnter={handleHover} onMouseLeave={handleMouseLeave}>
-					<Image src={image} alt="product" width={247} height={330} />
+				<div
+					onMouseEnter={handleHover}
+					onMouseLeave={handleMouseLeave}
+					className=" w-fit mx-auto h-fit overflow-hidden  my-auto flex flex-col 
+				"
+				>
+					{featuredImage && (
+						<Image
+							onLoad={(e) => {
+								console.log(e.target);
+							}}
+							src={featuredImage}
+							alt="product"
+							width={300}
+							height={300}
+							className="mx-auto my-auto object-contain"
+						/>
+					)}
 				</div>
 			</Link>
 
-			<div className="flex flex-col text-left gap-1">
-				<div className="text-2xl font-bold">product Name</div>
-				<div className="text-lg text-muted-foreground">artist name</div>
+			<div className="flex flex-col text-left gap-1 mx-auto text-black">
+				<div className="text-2xl font-bold uppercase text-wrap mx-auto">
+					{title}
+				</div>
+				<div className="text-xs text-black mx-auto">{productType}</div>
 			</div>
-			<div className="text-accent group-hover:text-muted-foreground transition-all duration-200 text-2xl">
-				{price}
-			</div>
-			<div className="flex flex-row justify-start">
-				<div className="  bg-red-600 rounded-full w-7 h-7 mr-2 hover:scale-105 focus:scale-95"></div>
-				<div className="  bg-blue-400 rounded-full w-7 h-7 mr-2 hover:scale-105 focus:scale-95"></div>
-				<div className="  bg-yellow-300 rounded-full w-7 h-7 mr-2 hover:scale-105 focus:scale-95"></div>
-				<div className="  bg-slate-300 rounded-full w-7 h-7 mr-2 hover:scale-105 focus:scale-95"></div>
-			</div>
-			<div className="absolute left-96 bg-red-400">
-				<ProductSideviewSheet imageUrl={image} />
+
+			<div className="flex flex-row justify-between mt-5">
+				<Button className="shadow-md bg-gradient-to-r from-primary to-secondary text-white-100 rounded-none px-4 uppercase hover:from-black hover:to-secondary transition-all duration-100 hover:scale-105">
+					Add to cart
+				</Button>
+
+				<Button
+					variant={"outline"}
+					className="shadow-md bg-white text-black rounded-none px-4 uppercase  hover:scale-105"
+				>
+					wishlist
+				</Button>
 			</div>
 		</div>
 	);
